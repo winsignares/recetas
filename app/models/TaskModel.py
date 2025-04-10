@@ -18,6 +18,6 @@ with app.app_context():
     db.create_all()
 
 
-class CategorySchema(ma.Schema):
+class TaskSchema(ma.Schema):
     class Meta:
         fields = ('id', 'nametask', 'id_user_fk', 'id_category_fk')

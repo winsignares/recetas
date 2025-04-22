@@ -1,7 +1,7 @@
 from config.db import app, db, ma
 
 class Task(db.Model):
-    __tablename__ = "tblcategory"
+    __tablename__ = "tbltask"
 
     id = db.Column(db.Integer, primary_key = True)
     nametask = db.Column(db.String(50))

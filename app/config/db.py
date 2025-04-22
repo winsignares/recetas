@@ -10,7 +10,7 @@ nombrecontainer= "mysql_container"
 namebd = "recetas_db"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{user}:{password}@{nombrecontainer}/{namebd}'
-app.congig['SQLALCHEMY_TRACK:MODIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "ingweb"
 
 db = SQLAlchemy(app)

@@ -1,4 +1,5 @@
 from config.db import app, db, ma
+from marshmallow import Schema, fields
 
 class Category(db.Model):
     __tablename__ = "tblcategory"
@@ -14,6 +15,7 @@ with app.app_context():
     db.create_all()
 
 
-class CategorySchema(ma.Schema):
+class CategorySchema(Schema):
     class Meta:
-        fields = ('id', 'namecategory')
+        id = fields.Integer()
+        namecategory = fields.String()

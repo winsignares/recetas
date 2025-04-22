@@ -1,4 +1,5 @@
 from config.db import app, db, ma
+from marshmallow import Schema, fields
 
 class Task(db.Model):
     __tablename__ = "tbltask"
@@ -14,10 +15,9 @@ class Task(db.Model):
         self.id_category_fk = id_category_fk
 
 
-with app.app_context():
-    db.create_all()
-
-
-class TaskSchema(ma.Schema):
+class TaskSchema(Schema):
     class Meta:
-        fields = ('id', 'nametask', 'id_user_fk', 'id_category_fk')
+        id = fields.Integer()
+        nametask = fields.String()
+        id_user_fk = fields.Integer()
+        id_category_fk = fields.Integer()

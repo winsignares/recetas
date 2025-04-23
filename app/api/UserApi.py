@@ -7,11 +7,11 @@ usuarios_schema = UsersSchema(many=True)
 
 ruta_user = Blueprint("ruta_user", __name__)
 
-@ruta_user.route("/user", methods=['GET'])
+@ruta_user.route("/", methods=['GET'])
 def alluser():
     resultall = Users.query.all()
     resp = usuarios_schema.dump(resultall)  
-    return jsonify(resp)
+    return jsonify({"data": resp})
 
 @ruta_user.route("/saveUser", methods=['POST'])
 def saveuser():
@@ -24,7 +24,9 @@ def saveuser():
     newuser = Users(fullname, email)
     db.session.add(newuser)
     db.session.commit()
-    return jsonify({"message": "Usuario guardado con éxito"})
+
+    result = usuario_schema.dump(newuser)
+    return jsonify({"message": "Usuario guardado con éxito", "data": result}), 201
 
 @ruta_user.route("/deleteUser", methods=['DELETE'])
 def deleteuser():  

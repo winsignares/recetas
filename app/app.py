@@ -9,7 +9,7 @@ with app.app_context():
     db.create_all()
 
 # Registramos las rutas con blueprint
-app.register_blueprint(ruta_user, url_prefix='/api') # localhost:5000/api/user
+app.register_blueprint(ruta_user, url_prefix='/api/user') # localhost:5000/api/user
 app.register_blueprint(ruta_category, url_prefix='/api')
 app.register_blueprint(ruta_task, url_prefix='/api')
 
@@ -19,4 +19,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000, host="0.0.0.0")
+    app.run(debug=True, port=5001, host="0.0.0.0")

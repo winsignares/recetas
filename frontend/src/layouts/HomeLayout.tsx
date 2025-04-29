@@ -6,7 +6,7 @@ export default function HomeLayout() {
     <>
       <Navbar />
 
-      <main className="max-w-screen-2xl">
+      <main>
         <Outlet />
       </main>
     </>

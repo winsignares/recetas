@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { MdMenu, MdClose } from "react-icons/md"
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,27 +33,21 @@ export default function Navbar() {
           <nav>
             <ul className="flex items-center gap-6">
               <li>
-                <a href="/" className="uppercase font-semibold">Inicio</a>
+                <Link to="/" className="uppercase font-semibold hover:text-[#0A4486]">Inicio</Link>
               </li>
               <li>
-                <a href="/recetas" className="uppercase font-semibold">Ver Recetas</a>
+                <Link to="/recetas" className="uppercase font-semibold hover:text-[#0A4486]">Ver Recetas</Link>
               </li>
             </ul>
           </nav>
         </div>
 
         <div className="hidden lg:flex gap-2">
-          <a className="px-2 py-2 border-2 border-b-[#0A4486] cursor-pointer
-            hover:bg-[#0A4486] hover:text-white rounded-md transition-colors duration-200"
+          <Link to={'/'} className="px-2 py-2 bg-[#0A4486] text-white cursor-pointer
+            hover:bg-[#1559A5] hover:text-white rounded transition-colors duration-200 font-bold"
           >
             Iniciar Sesión
-          </a>
-
-          <a className="px-2 py-2 bg-[#0A4486] text-white cursor-pointer
-            hover:bg-[#1559A5] hover:text-white rounded-md transition-colors duration-200"
-          >
-            Registrarse
-          </a>
+          </Link>
         </div>
 
         {/* Mobile menu */}
@@ -71,25 +66,20 @@ export default function Navbar() {
             <nav className="mt-4">
               <ul className="flex flex-col gap-6 text-center">
                 <li>
-                  <a href="/" className="uppercase font-semibold">Inicio</a>
+                  <Link to="/" className="uppercase font-semibold">Inicio</Link>
                 </li>
                 <li>
-                  <a href="/recetas" className="uppercase font-semibold">Ver Recetas</a>
+                  <Link to="/recetas" className="uppercase font-semibold">Ver Recetas</Link>
                 </li>
               </ul>
             </nav>
 
             <div className="mt-6 text-center flex flex-col gap-2 px-20">
-              <a href="/" className="px-2 py-2 border-2 border-b-[#0A4486] cursor-pointer
-              hover:bg-[#0A4486] hover:text-white rounded-md transition-colors duration-200"
+              <Link to="/" className="px-2 py-2 bg-[#0A4486] text-white cursor-pointer
+              hover:bg-[#1559A5] hover:text-white rounded transition-colors duration-200 font-bold"
               >
                 Iniciar Sesión
-              </a>
-              <a href="/" className="px-2 py-2 bg-[#0A4486] text-white cursor-pointer
-              hover:bg-[#1559A5] hover:text-white rounded-md transition-colors duration-200"
-              >
-                Registrarse
-              </a>
+              </Link>
             </div>
           </div>
         )}

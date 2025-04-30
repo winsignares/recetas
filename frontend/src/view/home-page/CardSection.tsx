@@ -14,30 +14,30 @@ export default function CardSection() {
           </div>
           <p className="lg:w-1/2 w-full leading-relaxed text-gray-500">Cocinar no tiene que ser complicado. Comparte momentos, sabores y tradiciones con cada receta. Nuestra colección está pensada para ayudarte a disfrutar el arte de cocinar sin estrés.</p>
         </div>
-        <div className="flex flex-wrap -m-4">
+        <div className="flex flex-wrap -m-4 items-stretch">
           <div className="xl:w-1/4 md:w-1/2 p-4">
-            <div className="bg-gray-100 p-6 rounded-lg">
+            <div className="bg-gray-100 p-6 rounded-lg h-full flex flex-col">
               <img className="h-60 rounded w-full object-cover object-center mb-6" src={ desayunoImg } alt="Desayuno image" />
               <h2 className="text-lg text-gray-900 font-bold title-font mb-4">Energía para comenzar el día</h2>
               <p className="leading-relaxed text-base">Descubre recetas fáciles y nutritivas para empezar tus mañanas con buen sabor. ¡Desde pancakes hasta bowls energéticos!</p>
             </div>
           </div>
           <div className="xl:w-1/4 md:w-1/2 p-4">
-            <div className="bg-gray-100 p-6 rounded-lg">
+            <div className="bg-gray-100 p-6 rounded-lg h-full flex flex-col">
               <img className="h-60 rounded w-full object-cover object-center mb-6" src={ almuerzoImg } alt="Almuerzo image" />
               <h2 className="text-lg text-gray-900 font-bold title-font mb-4">Recetas para el mediodía</h2>
               <p className="leading-relaxed text-base">Ideas rápidas y deliciosas para el almuerzo. Recetas caseras, saludables y listas en menos de 30 minutos.</p>
             </div>
           </div>
           <div className="xl:w-1/4 md:w-1/2 p-4">
-            <div className="bg-gray-100 p-6 rounded-lg">
+            <div className="bg-gray-100 p-6 rounded-lg h-full flex flex-col">
               <img className="h-60 rounded w-full object-cover object-center mb-6" src={ cenaImg } alt="Cena image" />
               <h2 className="text-lg text-gray-900 font-bold title-font mb-4">Cenas ligeras o contundentes</h2>
               <p className="leading-relaxed text-base">¿Cenas rápidas después del trabajo? ¿O algo especial para compartir? Encuentra la receta perfecta para cerrar el día.</p>
             </div>
           </div>
           <div className="xl:w-1/4 md:w-1/2 p-4">
-            <div className="bg-gray-100 p-6 rounded-lg">
+            <div className="bg-gray-100 p-6 rounded-lg h-full flex flex-col">
               <img className="h-60 rounded w-full object-cover object-center mb-6" src={ postreImg } alt="Postre image" />
               <h2 className="text-lg text-gray-900 font-bold title-font mb-4">Dulces momentos</h2>
               <p className="leading-relaxed text-base">Desde clásicos como flan y brownies hasta opciones sin azúcar. Inspírate con recetas irresistibles para endulzar la vida.</p>

@@ -12,7 +12,7 @@ export default function Header() {
             Descubre y comparte recetas deliciosas
             <br className="hidden lg:inline-block" />para cada ocasión 
           </h1>
-          <p className="mb-8 leading-relaxed text-gray-400">
+          <p className="mb-8 leading-relaxed text-gray-300">
             Encuentra recetas caseras fáciles y sabrosas, comparte tus creaciones con la
             comunidad y recibe valoraciones de otros amantes de la cocina.
             Ideal para principiantes y chefs apasionados.

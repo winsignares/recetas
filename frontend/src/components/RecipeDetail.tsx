@@ -5,7 +5,7 @@ export default function RecipeDetail() {
         Big and Juicy Wagyu Beef Cheeseburger
       </h1>
       <img
-        src="https://via.placeholder.com/800x400"
+        src="https://www.levapan.com/wp-content/uploads/2024/04/Recetas_de_galletas.jpeg"
         alt="Cheeseburger"
         className="rounded-xl w-full object-cover mb-6"
       />

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 const recipes = Array(6).fill({
   title: "Big and Juicy Wagyu Beef Cheeseburger",
@@ -31,9 +32,9 @@ export default function CardList() {
                   {recipe.title}
                 </h3>
                 <div className="flex justify-between items-center">
-                  <a href={recipe.link} className="text-blue-600 hover:underline">
+                  <Link to={'/receta-detalle'} className="text-blue-600 hover:underline">
                     Ver más
-                  </a>
+                  </Link>
                   <div className="flex mt-2 space-x-1">
                     {Array.from({ length: recipe.rating }).map((_, i) => (
                       <svg

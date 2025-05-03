@@ -43,7 +43,7 @@ export default function Navbar() {
         </div>
 
         <div className="hidden lg:flex gap-2">
-          <Link to={'/'} className="px-2 py-2 bg-[#0A4486] text-white cursor-pointer
+          <Link to={'/auth/login'} className="px-2 py-2 bg-[#0A4486] text-white cursor-pointer
             hover:bg-[#1559A5] hover:text-white rounded transition-colors duration-200 font-bold"
           >
             Iniciar Sesión

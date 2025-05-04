@@ -33,10 +33,20 @@ export default function Navbar() {
           <nav>
             <ul className="flex items-center gap-6">
               <li>
-                <Link to="/" className="uppercase font-semibold hover:text-[#0A4486]">Inicio</Link>
+                <Link
+                  to="/"
+                  className="uppercase font-semibold hover:text-[#0A4486]"
+                >
+                  Inicio
+                </Link>
               </li>
               <li>
-                <Link to="/recetas" className="uppercase font-semibold hover:text-[#0A4486]">Ver Recetas</Link>
+                <Link
+                  to="/recetas"
+                  className="uppercase font-semibold hover:text-[#0A4486]"
+                >
+                  Ver Recetas
+                </Link>
               </li>
             </ul>
           </nav>
@@ -66,16 +76,28 @@ export default function Navbar() {
             <nav className="mt-4">
               <ul className="flex flex-col gap-6 text-center">
                 <li>
-                  <Link to="/" className="uppercase font-semibold">Inicio</Link>
+                  <Link
+                    to="/"
+                    className="uppercase font-semibold"
+                    onClick={toggleMenu}
+                  >
+                    Inicio
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/recetas" className="uppercase font-semibold">Ver Recetas</Link>
+                  <Link
+                    to="/recetas"
+                    className="uppercase font-semibold"
+                    onClick={toggleMenu}
+                  >
+                    Ver Recetas
+                  </Link>
                 </li>
               </ul>
             </nav>
 
             <div className="mt-6 text-center flex flex-col gap-2 px-20">
-              <Link to="/" className="px-2 py-2 bg-[#0A4486] text-white cursor-pointer
+              <Link to="/auth/login" className="px-2 py-2 bg-[#0A4486] text-white cursor-pointer
               hover:bg-[#1559A5] hover:text-white rounded transition-colors duration-200 font-bold"
               >
                 Iniciar Sesión

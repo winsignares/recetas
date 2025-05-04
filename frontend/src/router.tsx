@@ -7,6 +7,9 @@ import RecipeDetailPage from "./view/recipeDetail - page/RecipeDetailPage";
 import AuthLayout from "./layouts/AuthLayout";
 import LoginPage from "./view/login - page/LoginPage";
 import RegisterPage from "./view/register - page/RegisterPage";
+import DashboardLayout from "./layouts/DashboardLayout";
+import UploadRecipe from "./view/dashboard/subirReceta - page/UploadRecipe";
+import RecipeList from "./view/dashboard/recipeList - page/RecipeList";
 
 
 export const router = createBrowserRouter([
@@ -40,11 +43,27 @@ export const router = createBrowserRouter([
     children: [
       {
         path: 'login',
+        index: true,
         element: <LoginPage />
       },
       {
         path: 'register',
         element: <RegisterPage />
+      }
+    ]
+  },
+  {
+    path: '/dashboard',
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: 'subir-receta',
+        index: true,
+        element: <UploadRecipe />
+      },
+      {
+        path: 'recetas',
+        element: <RecipeList />
       }
     ]
   }

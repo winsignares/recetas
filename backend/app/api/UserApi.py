@@ -1,41 +1,38 @@
-from flask import Flask, Blueprint, request, redirect, render_template, jsonify
-from config.db import db, app, ma
-from models.UsersModel import Users, UsersSchema
+from flask import Blueprint, request, jsonify
+from config.db import db
+from models.UsersModel import User, user_schema, users_schema
 
-usuario_schema = UsersSchema()
-usuarios_schema = UsersSchema(many=True)
+user_routes = Blueprint('user_routes', __name__)
 
-ruta_user = Blueprint("ruta_user", __name__)
+@user_routes.route('/', methods=['GET'])
+def get_users():
+    users = User.query.all()
+    return jsonify({"data": users_schema.dump(users)})
 
-@ruta_user.route("/", methods=['GET'])
-def alluser():
-    resultall = Users.query.all()
-    resp = usuarios_schema.dump(resultall)  
-    return jsonify({"data": resp})
+@user_routes.route('/<id>', methods=['GET'])
+def get_user(id):
+    user = User.query.get(id)
+    if not user:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+    return jsonify(user_schema.dump(user))
 
-@ruta_user.route("/saveUser", methods=['POST'])
-def saveuser():
-    fullname = request.json.get('fullname')
-    email = request.json.get('email')
-
-    if not fullname or not email:
-        return jsonify({"error": "Faltan datos"}), 400
-
-    newuser = Users(fullname, email)
-    db.session.add(newuser)
-    db.session.commit()
-
-    result = usuario_schema.dump(newuser)
-    return jsonify({"message": "Usuario guardado con éxito", "data": result}), 201
-
-@ruta_user.route("/deleteUser", methods=['DELETE'])
-def deleteuser():  
+@user_routes.route('/update', methods=['PUT'])
+def update_user():
     id = request.json.get('id')
-    user = Users.query.get(id)
-
+    user = User.query.get(id)
     if not user:
         return jsonify({"error": "Usuario no encontrado"}), 404
 
+    user.nombre = request.json.get('nombre', user.nombre)
+    user.email = request.json.get('email', user.email)
+    db.session.commit()
+    return jsonify({"message": "Usuario actualizado", "data": user_schema.dump(user)})
+
+@user_routes.route('/delete/<id>', methods=['DELETE'])
+def delete_user(id):
+    user = User.query.get(id)
+    if not user:
+        return jsonify({"error": "Usuario no encontrado"}), 404
     db.session.delete(user)
     db.session.commit()
-    return jsonify({"message": "Usuario eliminado con éxito"})
+    return jsonify({"message": "Usuario eliminado"})

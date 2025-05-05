@@ -1,21 +1,18 @@
-from config.db import app, db, ma
-from marshmallow import Schema, fields
+from config.db import db, ma
+from marshmallow import fields
 
 class Category(db.Model):
-    __tablename__ = "tblcategory"
+    __tablename__ = 'categories'
 
-    id = db.Column(db.Integer, primary_key = True)
-    namecategory = db.Column(db.String(50))
+    id = db.Column(db.BigInteger, primary_key=True)
+    nombre = db.Column(db.String(255))
 
-    def __init__(self, namecategory):
-        self.namecategory = namecategory
+    def __init__(self, nombre):
+        self.nombre = nombre
 
+class CategorySchema(ma.Schema):
+    id = fields.Integer()
+    nombre = fields.String()
 
-with app.app_context():
-    db.create_all()
-
-
-class CategorySchema(Schema):
-    class Meta:
-        id = fields.Integer()
-        namecategory = fields.String()
+category_schema = CategorySchema()
+categories_schema = CategorySchema(many=True)

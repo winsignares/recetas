@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, render_template, send_from_directory
 from config.db import app, db
+import os
 
 from api.UserApi import user_routes
 from api.AuthApi import auth_routes
@@ -27,7 +28,8 @@ app.register_blueprint(profile_picture_routes, url_prefix='/api/profile_pictures
 
 @app.route('/uploads/<path:filename>')
 def serve_uploaded_file(filename):
-    return send_from_directory('uploads', filename)
+    uploads_dir = os.path.join(app.root_path, 'uploads')
+    return send_from_directory(uploads_dir, filename)
 
 @app.route("/")
 def index():

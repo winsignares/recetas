@@ -20,8 +20,7 @@ def save_comment():
     new_comment = Comment(
         usuario_id=data['usuario_id'],
         receta_id=data['receta_id'],
-        contenido=data['contenido'],
-        fecha_comentario=datetime.utcnow()
+        contenido=data['contenido']
     )
     db.session.add(new_comment)
     db.session.commit()

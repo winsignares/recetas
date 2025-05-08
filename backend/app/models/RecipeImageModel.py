@@ -6,25 +6,27 @@ class RecipeImage(db.Model):
 
     id = db.Column(db.BigInteger, primary_key=True)
     receta_id = db.Column(db.BigInteger, db.ForeignKey('recipes.id'), nullable=False)
-    downloadUrl = db.Column(db.String(255))
+    download_url = db.Column(db.String(255))  
     file_name = db.Column(db.String(255))
     file_type = db.Column(db.String(255))
+    image = db.Column(db.LargeBinary)  
 
-    def __init__(self, receta_id, downloadUrl, file_name, file_type):
+    def __init__(self, receta_id, download_url, file_name, file_type, image):
         self.receta_id = receta_id
-        self.downloadUrl = downloadUrl
+        self.download_url = download_url
         self.file_name = file_name
         self.file_type = file_type
+        self.image = image
 
 class RecipeImageSchema(ma.Schema):
     id = fields.Integer(dump_only=True)
     receta_id = fields.Integer(required=True)
-    downloadUrl = fields.String()
+    download_url = fields.String()
     file_name = fields.String()
     file_type = fields.String()
 
     class Meta:
-        fields = ('id', 'receta_id', 'downloadUrl', 'file_name', 'file_type')
+        fields = ('id', 'receta_id', 'download_url', 'file_name', 'file_type')
         model = RecipeImage
 
 recipe_image_schema = RecipeImageSchema()

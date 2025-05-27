@@ -9,7 +9,7 @@ class RecipeImage(db.Model):
     download_url = db.Column(db.String(255))  
     file_name = db.Column(db.String(255))
     file_type = db.Column(db.String(255))
-    image = db.Column(db.LargeBinary)  
+    image = image = db.Column(db.LargeBinary(length=(2**24)-1)) 
 
     def __init__(self, receta_id, download_url, file_name, file_type, image):
         self.receta_id = receta_id

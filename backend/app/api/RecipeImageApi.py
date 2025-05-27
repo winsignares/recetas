@@ -62,7 +62,7 @@ def save_recipe_image():
     db.session.flush() 
 
     # Generate download URL
-    download_url = f"/api/recipe_images/download/{new_image.id}"
+    download_url = f"http://127.0.0.1:5001/api/recipe_images/download/{new_image.id}"
     new_image.download_url = download_url
 
     db.session.commit()

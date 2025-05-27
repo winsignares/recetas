@@ -1,40 +1,67 @@
-import { FormEvent, useState } from 'react';
-import StarRatingInput from './StarRatingInput';
+import { useForm } from 'react-hook-form'
+import ErrorMessage from './ErrorMessage';
+import { useParams } from 'react-router-dom';
+import { Comment } from '@/types';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createComment } from '@/api/recipeApi';
 
 export default function ReviewForm() {
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
+  const queryClient  = useQueryClient()
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log('Calificación:', rating);
-    console.log('Comentario:', comment);
-  };
+  const params = useParams()
+  const recetaId = +params.id!
+
+  const initialValues : Comment = {
+    contenido: ""
+  }
+  
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({ defaultValues: initialValues })
+
+  const { mutate } = useMutation({
+    mutationFn: createComment,
+    onError: () => {
+
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['recipeDetail'] })
+      reset()
+    }
+  })
+
+  const handleForm = (commentFormData: Comment) => {
+    const data = {
+      commentFormData,
+      receta_id: recetaId
+    }
+    mutate(data)
+  }
+
 
   return (
     <section className="mt-12 border-t pt-8">
       <h2 className="text-lg font-semibold mb-2">Añade una valoración</h2>
-      <p className="text-sm text-gray-600 mb-4">
-        Tu dirección de correo electrónico no será publicada.
-      </p>
 
       <form
         className="space-y-6"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(handleForm)}
+        noValidate
       >
-        <div>
-          <label className="block font-medium">Tu puntuación:</label>
-          <StarRatingInput rating={rating} onChange={setRating} />
-        </div>
 
         <div>
-          <label className="block font-medium">Tu valoración:</label>
+          <label htmlFor='contenido' className="block font-medium">Tu valoración:</label>
           <textarea
+            id='contenido'
             className="w-full p-3 border rounded-lg"
             rows={5}
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            {...register('contenido', {
+              required: 'La valoración es obligatorio'
+            })}
           />
+
+          {errors.contenido && (
+            <ErrorMessage>{ errors.contenido.message }</ErrorMessage>
+          )}
+
         </div>
 
         <button

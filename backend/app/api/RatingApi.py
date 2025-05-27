@@ -15,37 +15,28 @@ def get_ratings():
 @rating_routes.route('/save', methods=['POST'])
 def save_rating():
     data = request.get_json()
-    usuario_id = data.get('usuario_id')
     receta_id = data.get('receta_id')
     calificacion = data.get('calificacion')
 
-    # Validate required fields
-    if not all([usuario_id, receta_id, calificacion]):
-        return jsonify({"error": "Faltan datos requeridos: usuario_id, receta_id o calificacion"}), 400
+    # Valida los campos requeridos
+    if not all([receta_id, calificacion]):
+        return jsonify({"error": "Faltan datos requeridos: receta_id o calificacion"}), 400
 
-    # Validate usuario_id and receta_id exist
-    if not User.query.get(usuario_id):
-        return jsonify({"error": "Usuario no encontrado"}), 404
     if not Recipe.query.get(receta_id):
         return jsonify({"error": "Receta no encontrada"}), 404
 
-    # Validate calificacion is between 1 and 5
+    # Validar calificación entre 1 y 5
     if not isinstance(calificacion, int) or calificacion < 1 or calificacion > 5:
         return jsonify({"error": "La calificación debe ser un entero entre 1 y 5"}), 400
 
-    # Check for duplicate rating
-    if Rating.query.filter_by(usuario_id=usuario_id, receta_id=receta_id).first():
-        return jsonify({"error": "El usuario ya ha calificado esta receta"}), 400
-
     # Create new rating
     new_rating = Rating(
-        usuario_id=usuario_id,
         receta_id=receta_id,
         calificacion=calificacion
     )
     db.session.add(new_rating)
 
-    # Update promedio_calificacion in recipes
+    # Actualiza el promedio_calificacion en recipes
     avg_rating = db.session.query(func.avg(Rating.calificacion)).filter(Rating.receta_id == receta_id).scalar()
     recipe = Recipe.query.get(receta_id)
     recipe.promedio_calificacion = avg_rating if avg_rating else None

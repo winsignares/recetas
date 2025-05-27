@@ -6,3 +6,4 @@ pymysql
 PyJWT
 bcrypt
 werkzeug
+flask-cors

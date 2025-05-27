@@ -23,30 +23,6 @@
   }
   ```
 
-## CategoryApi.py
-
-- Crea una nueva categoría.<br>
-  [POST /api/categories/save](http://127.0.0.1:5001/api/categories/save)
-
-  ```json
-  {
-    "nombre": "Postres"
-  }
-  ```
-
-- Actualizar una categoría existente (requiere el ID).<br>
-  [PUT /api/categories/update](http://127.0.0.1:5001/api/categories/update)
-
-  ```json
-  {
-    "id": 1,
-    "nombre": "Postres Saludables"
-  }
-  ```
-
-- Eliminar una cateogoria
-  [DELETE /api/categories/delete/<id>](http://127.0.0.1:5001/api/categories/delete/0)
-
 ## RecipeApi.py
 
 - Crear una nueva receta.<br>
@@ -54,12 +30,10 @@
 
   ```json
   {
-    "usuario_id": 1,
     "titulo": "Tarta de Manzana",
     "descripcion": "Deliciosa tarta de manzana casera.",
     "ingredientes": "Manzanas, harina, azúcar, mantequilla",
-    "preparacion": "Mezclar ingredientes, hornear por 40 minutos.",
-    "categoria_id": 1
+    "preparacion": "Mezclar ingredientes, hornear por 40 minutos."
   }
   ```
 
@@ -69,12 +43,10 @@
   ```json
   {
     "id": 1,
-    "usuario_id": 1,
     "titulo": "Tarta de Manzana Mejorada",
     "descripcion": "Tarta de manzana con un toque de canela.",
     "ingredientes": "Manzanas, harina, azúcar, mantequilla, canela",
-    "preparacion": "Mezclar ingredientes, hornear por 45 minutos.",
-    "categoria_id": 1
+    "preparacion": "Mezclar ingredientes, hornear por 45 minutos."
   }
   ```
 
@@ -88,26 +60,10 @@
 
   ```json
   {
-    "usuario_id": 1,
     "receta_id": 1,
     "calificacion": 4
   }
   ```
-
-## FavoriteApi.py
-
-- Añadir una receta a los favoritos de un usuario.<br>
-  [POST /api/favorites/save](http://127.0.0.1:5001/api/favorites/save)
-
-  ```json
-  {
-    "usuario_id": 1,
-    "receta_id": 1
-  }
-  ```
-
-- Eliminar una receta de favoritos.<br>
-  [DELETE /api/favorites/delete/<id>](http://127.0.0.1:5001/api/favorites/delete/1)
 
 ## CommentApi.py
 
@@ -116,7 +72,6 @@
 
   ```json
   {
-    "usuario_id": 1,
     "receta_id": 1,
     "contenido": "¡Deliciosa receta, la probaré pronto!"
   }

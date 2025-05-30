@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Receta } from '../types/index';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteRecipe } from '@/api/recipeApi';
 
 
@@ -9,24 +9,28 @@ type RecipeDetailProps = {
 }
 
 export default function RecipeDetail({ data }: RecipeDetailProps) {
+  const queryClient = useQueryClient();
   const navigate = useNavigate()
   
   const ingredientesArray: string[] = data.ingredientes.split(",").map((ing) => ing.trim()).filter((ing) => ing.length > 0)
 
   const { mutate } = useMutation({
-    mutationFn: deleteRecipe
+    mutationFn: deleteRecipe,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['recipeDetail']})
+      navigate('/recetas')
+    }
   })
   
   const handleDelete = (recetaId: Receta['id']) => {
     mutate(recetaId)
-    navigate('/recetas')
   }
 
   return (
     <section>
       <div className='relative flex gap-4 justify-end mb-6'>
         <Link
-          to='/'
+          to={`/dashboard/editar-receta/${data.id}`}
           className='bg-[#0A4486] p-2 hover:bg-[#1559A5] text-white font-bold transition-colors 
           rounded cursor-pointer'
         >Actualizar</Link>

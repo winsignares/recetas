@@ -1,8 +1,6 @@
 import { Comment, FormReceta, Receta, RecetaResponseSchema, RecetasResponseSchema } from '@/types'
 import axios from 'axios'
 
-
-
 export const url = 'http://127.0.0.1:5001'
 
 export async function getRecipes() {
@@ -60,6 +58,29 @@ export async function createRecipeWithImage(formData: FormReceta, image: File) {
   }
 }
 
+export async function updateRecipeWithImage(id: Receta['id'], formData: FormReceta, image?: File) {
+  const form = new FormData();
+  form.append("titulo", formData.titulo);
+  form.append("descripcion", formData.descripcion);
+  form.append("ingredientes", formData.ingredientes);
+  form.append("preparacion", formData.preparacion);
+  if (image) {
+    form.append("image", image);
+  }
+
+  try {
+    const { data } = await axios.put(`${url}/api/recipes/update_with_image/${id}`, form, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return data.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 export async function deleteRecipe(id: Receta['id']) {
   try {
     const { data } = await axios.delete(`${url}/api/recipes/delete/${id}`)
@@ -85,8 +106,7 @@ export async function createImage(image: File, receta_id: number) {
   return response
 }
 
-
-// Comment
+// Comentarios
 type CommentApiType = {
   commentFormData: Comment,
   receta_id: Receta['id']

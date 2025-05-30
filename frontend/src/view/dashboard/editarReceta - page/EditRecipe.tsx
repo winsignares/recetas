@@ -2,14 +2,16 @@ import ErrorMessage from "@/components/ErrorMessage";
 import { FormReceta, formRecetaSchema } from "@/types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
-import { createImage, createRecipe, createRecipeWithImage } from "@/api/recipeApi";
-import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
+import { getRecipeById, updateRecipeWithImage } from "@/api/recipeApi";
+import { useParams, useNavigate } from "react-router-dom";
 
-export default function UploadRecipe() {
+export default function EditRecipe() {
+  const queryClient = useQueryClient();
+
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState("Ningún archivo elegido");
 
@@ -17,7 +19,8 @@ export default function UploadRecipe() {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
+    setValue
   } = useForm<FormReceta>({
     resolver: zodResolver(formRecetaSchema),
     defaultValues: {
@@ -28,40 +31,51 @@ export default function UploadRecipe() {
     },
   });
 
-  const createRecipeWithImageMutation = useMutation({
-    mutationFn: ({ formData, image }: { formData: FormReceta; image: File }) =>
-      createRecipeWithImage(formData, image),
+  const { data: recipe, isLoading, error } = useQuery({
+    queryKey: ['recipe', id],
+    queryFn: () => getRecipeById(Number(id)),
+    enabled: !!id,
   });
 
-  const createRecipeMutation = useMutation({
-    mutationFn: createRecipe,
-  });
+  useEffect(() => {
+    if (recipe) {
+      setValue("titulo", recipe.titulo);
+      setValue("descripcion", recipe.descripcion);
+      setValue("ingredientes", recipe.ingredientes);
+      setValue("preparacion", recipe.preparacion);
+      if (recipe.imagenes[0]?.file_name) {
+        setFileName(recipe.imagenes[0].file_name);
+      }
+    }
+  }, [recipe, setValue]);
 
-  const uploadImageMutation = useMutation({
-    mutationFn: ({ image, receta_id }: { image: File; receta_id: number }) =>
-      createImage(image, receta_id),
+  const updateRecipeWithImageMutation = useMutation({
+    mutationFn: ({ id, formData, image }: { id: number; formData: FormReceta; image?: File }) =>
+      updateRecipeWithImage(id, formData, image),
   });
 
   const onSubmit = async (formValues: FormReceta) => {
+    if (!id) {
+      alert("ID de receta no encontrado ❗");
+      return;
+    }
+
     try {
-      if (!file) {
-        alert("Por favor, selecciona una imagen ❗");
-        return;
-      }
-  
-      const receta = await createRecipeWithImageMutation.mutateAsync({
+      const receta = await updateRecipeWithImageMutation.mutateAsync({
+        id: Number(id),
         formData: formValues,
-        image: file,
+        image: file || undefined,
       });
-  
-      alert("Receta e imagen guardadas exitosamente ✅");
-      navigate('/recetas')
+
+      queryClient.invalidateQueries({queryKey: ['recipeDetail']})
+
+      alert("Receta actualizada exitosamente ✅");
       reset();
       setFile(null);
       setFileName("Ningún archivo elegido");
+      navigate(`/recetas`);
     } catch (error) {
-      console.error("Error al subir receta o imagen:", error);
-      alert("Error al subir la receta");
+      alert(error);
     }
   };
 
@@ -75,10 +89,13 @@ export default function UploadRecipe() {
     }
   };
 
+  if (isLoading) return <div>Cargando...</div>;
+  if (error) return <div>Error al cargar la receta: {error.message}</div>;
+  if (!recipe) return <div>Receta no encontrada</div>;
+
   return (
     <div className="min-h-screen w-full p-4 md:p-8 shadow-md">
-      <h2 className="text-3xl font-bold text-[#0A4486]">Subir Nueva Receta</h2>
-      <p>Sube la receta que creas necesaria para compartir</p>
+      <h2 className="text-3xl font-bold text-[#0A4486]">Actualizar Receta</h2>
 
       <form
         className="grid grid-cols-1 md:grid-cols-2 gap-6 rounded-xl p-6 my-6 shadow-md"
@@ -169,11 +186,11 @@ export default function UploadRecipe() {
             type="submit"
             className="bg-[#0A4486] text-white px-6 py-2 rounded-md hover:bg-[#1559A5] cursor-pointer 
             transition-colors duration-200"
-            disabled={createRecipeMutation.isPending || uploadImageMutation.isPending}
+            disabled={updateRecipeWithImageMutation.isPending}
           >
-            {createRecipeMutation.isPending || uploadImageMutation.isPending
-            ? "Subiendo..."
-            : "+ Subir nueva receta"}
+            {updateRecipeWithImageMutation.isPending
+            ? "Actualizando..."
+            : "+ Actualizar receta"}
           </button>
         </div>
       </form>

@@ -61,7 +61,7 @@ export default function EditRecipe() {
     }
 
     try {
-      const receta = await updateRecipeWithImageMutation.mutateAsync({
+      await updateRecipeWithImageMutation.mutateAsync({
         id: Number(id),
         formData: formValues,
         image: file || undefined,

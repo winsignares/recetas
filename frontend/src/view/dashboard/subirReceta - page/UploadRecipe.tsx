@@ -49,7 +49,7 @@ export default function UploadRecipe() {
         return;
       }
   
-      const receta = await createRecipeWithImageMutation.mutateAsync({
+      await createRecipeWithImageMutation.mutateAsync({
         formData: formValues,
         image: file,
       });

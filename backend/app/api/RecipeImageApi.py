@@ -61,7 +61,6 @@ def save_recipe_image():
     db.session.add(new_image)
     db.session.flush() 
 
-    # Generate download URL
     download_url = f"http://127.0.0.1:5001/api/recipe_images/download/{new_image.id}"
     new_image.download_url = download_url
 
@@ -80,7 +79,6 @@ def download_recipe_image(id):
     if not image:
         return jsonify({"error": "Imagen no encontrada"}), 404
 
-    # Return the binary image data
     return send_file(
         io.BytesIO(image.image),
         mimetype=image.file_type,

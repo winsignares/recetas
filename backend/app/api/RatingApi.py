@@ -36,7 +36,6 @@ def save_rating():
     )
     db.session.add(new_rating)
 
-    # Actualiza el promedio_calificacion en recipes
     avg_rating = db.session.query(func.avg(Rating.calificacion)).filter(Rating.receta_id == receta_id).scalar()
     recipe = Recipe.query.get(receta_id)
     recipe.promedio_calificacion = avg_rating if avg_rating else None
@@ -54,7 +53,7 @@ def delete_rating(id):
     receta_id = rating.receta_id
     db.session.delete(rating)
 
-    # Update promedio_calificacion in recipes
+   
     avg_rating = db.session.query(func.avg(Rating.calificacion)).filter(Rating.receta_id == receta_id).scalar()
     recipe = Recipe.query.get(receta_id)
     recipe.promedio_calificacion = avg_rating if avg_rating else None

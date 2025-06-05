@@ -1,4 +1,3 @@
-# Etapa base para instalar dependencias
 FROM node:20-alpine AS base
 WORKDIR /app
 COPY package.json package-lock.json ./
@@ -9,12 +8,11 @@ FROM base AS dev
 COPY . .
 CMD ["npm", "run", "dev"]
 
-# Etapa de construcción para producción
 FROM base AS builder
 COPY . .
 RUN npm run build
 
-# Etapa final para producción con nginx
+# Desplagar build en el servidor nginx
 FROM nginx:alpine AS prod
 COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf

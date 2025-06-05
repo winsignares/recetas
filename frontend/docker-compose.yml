@@ -4,11 +4,11 @@ services:
   app:
     build:
       context: .
-      target: ${ENV:-prod} # Usa 'prod' por defecto, puede ser 'dev' con ENV=dev
+      target: ${ENV:-prod}
     ports:
-      - "3000:80" # Mapea el puerto 80 del contenedor (nginx) al 3000 del host
+      - "3000:80"
     volumes:
       - .:/app
-      - /app/node_modules # Evita montar node_modules en desarrollo
+      - /app/node_modules
     environment:
       - NODE_ENV=${NODE_ENV:-production}

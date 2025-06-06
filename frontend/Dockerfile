@@ -3,7 +3,6 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
 
-# Etapa de desarrollo
 FROM base AS dev
 COPY . .
 CMD ["npm", "run", "dev"]

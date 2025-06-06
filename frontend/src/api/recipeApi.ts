@@ -1,7 +1,7 @@
 import { Comment, FormReceta, Receta, RecetaResponseSchema, RecetasResponseSchema } from '@/types'
 import axios from 'axios'
 
-export const url = 'http://backend:5001'
+export const url = 'http://localhost:5001'
 
 export async function getRecipes() {
   try {
